@@ -1,0 +1,76 @@
+思考步骤
+1.确定对象
+2.确定属性、动作
+3.驱动器汇总设计
+
+
+
+对象：
+	棋子
+		属性：颜色
+		动作：反转颜色
+	棋盘Board————数据库
+		属性：状态数组（二维整型数组）
+				typedef State/Color Board[8][8];
+		属性：状态，黑、白、空
+			枚举实现 enum State{kEmpty=0,kWhite,kBlack};?
+				enum Color{kEmpty=0,kWhite,kBlack};
+		
+			计分器MkScore
+				属性：分数
+					int score;
+				动作：计算分数
+					cal_score(Board&){};
+			
+	玩家Player
+		属性：名字
+			string name;	...
+		动作：下棋，悔棋，跳过
+			get_move(Board&,Point&);——确定参数——棋位置确定
+						（二维点（x,y）struct Point{int x,int y};）
+			reg_move(Board&);——通过Board调用数据库状态数组——回退
+			skip_move();
+	数据库Datebase————棋盘
+		属性：允许回退步数：栈
+			int step;
+		属性：新建数据结构——为棋盘二维数组元素创建对应链表——
+				效率：只追踪变化元素，结点包括state+持续未变次数n
+		动作：保存当前棋局状态
+	规则库//complex!!
+	Ruler
+		规则（实现算法）
+	绘图：MFC
+
+	驱动器（游戏）Game
+		初始化：加载界面，初始化棋盘，读取相关配置（数据库）（如：用户保存的残局数据）
+		棋盘
+		玩家	—— 规则库（判断合法性及翻转棋子），数据库
+		棋子
+		
+		结束？计分器：继续
+		
+		Game design:
+			属性：
+				2个玩家
+					Player py_A;
+					Player py_B;
+				棋盘：
+					Board board;
+					数据库：
+						Datebase db;
+                    规则库：
+                        Ruler ruler;
+				计分器：
+					MkScore mkScore;
+			动作：
+				初始化：init_game(){};
+					加载数据库：load_db(){};
+					初始化规则库
+                    
+                    
+                
+               
+
+				
+			
+		
