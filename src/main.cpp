@@ -42,22 +42,34 @@ void draw_game(Board& b)
     cout<<"+"<<endl;
 }
 //输入处理
-bool input(Player& py,Board& b)
+bool input(Player& py,Board& b)//耦合
 {
-    Point p=py.input_pos();//检查是否越界
+    Point p=py.input_pos();
     if(p.x!=-1 && p.y!=-1)
     {
-        if(!py.get_move(b,p))
-        {
-            cout<<"The position should not be empty!"<<endl;
-            return false;
+        //输入Point越界处理
+        try{
+            if(!py.get_move(b,p))
+            {
+                cout<<"There are already pawns in this position."<<endl;
+                return false;
+            }
+            else
+            {
+                b.ruler(py.state,p);
+                system("cls");
+                draw_game(b);
+            }
         }
-        b.ruler(py.state,p);
+        catch(error& e){
+            cout<<py.name<<": "<<e.what()<<endl;
+        }
     }
     else
+    {
+        cout<<py.name<<": skip the step"<<endl;
         py.skip_move();
-    system("cls");
-    draw_game(b);
+    }
     return true;
 }
 
@@ -69,10 +81,6 @@ int main()//test
     draw_game(b);
     while(true)
     {
-        /*if(!input(py_A,b))//游戏逻辑稍有问题
-            input(py_A,b);
-        if(!input(py_B,b))
-            input(py_B,b);*/
         int score=0;
         input(py_A,b);
         score=b.cal_score(kBlack);

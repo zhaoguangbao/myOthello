@@ -38,7 +38,7 @@ bool check_bound(const Point point)
 //可利用栈进行改进
 void Board::ruler(const State state,Point point)
 {
-    Point curP=point;
+    Point curP=point;//此处保证输入point为有效
     for(int i=0;i<dirNum;i++)
     {
         curP.x=point.x+dir[i][0];
@@ -69,6 +69,8 @@ void Board::ruler(const State state,Point point)
 //设置棋盘状态
 bool Board::set_board(const Point point,const State state)
 {
+    if(check_bound(point))
+            throw error("out of range!");
     if(kEmpty==board[point.x][point.y])
     {
         board[point.x][point.y]=state;

@@ -1,5 +1,9 @@
 #ifndef __OTHELLO_BOARD_H_
 #define __OTHELLO_BOARD_H_
+
+#include <string>
+#include <iostream>
+
 //用于规则库判定的8个方向
 const int dirNum=8;
 const int dir[dirNum][2]={{0,-1},{1,0},{0,1},{-1,0},//上、右、下、左
@@ -36,6 +40,22 @@ public:
     bool set_board(const Point,const State);
 private:
     State board[row][col];
+};
+
+//错误处理
+class error
+{
+private:
+    std::string errMsg;
+public:
+    error(std::string errMsg)
+    {
+        this->errMsg=errMsg;
+    }
+    const std::string& what()
+    {
+        return errMsg;
+    }
 };
 
 #endif // __OTHELLO_BOARD_H_
