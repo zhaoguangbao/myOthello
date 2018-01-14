@@ -44,13 +44,13 @@ void Board::ruler(const State state,Point point)
         curP.x=point.x+dir[i][0];
         curP.y=point.y+dir[i][1];
         if(check_bound(curP))
-            return;
+            continue;
         while(-state==board[curP.x][curP.y])
         {
             curP.x+=dir[i][0];
             curP.y+=dir[i][1];
             if(check_bound(curP))
-                return;
+                continue;
             if(state==board[curP.x][curP.y])
             {
                 curP.x-=dir[i][0];
@@ -61,7 +61,7 @@ void Board::ruler(const State state,Point point)
                     curP.x-=dir[i][0];
                     curP.y-=dir[i][1];
                 }
-                break;
+                continue;
             }
         }
     }
